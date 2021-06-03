@@ -1,0 +1,181 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1024" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>General</title>
+
+  <meta name="author" content="Antonio Kobashikawa" />
+
+  <link
+    href="//fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic"
+    rel="stylesheet" />
+
+  <link href="css/impress-demo.css" rel="stylesheet" />
+  <link href="css/impress-common.css" rel="stylesheet" />
+
+</head>
+
+<body class="impress-not-supported">
+
+  <div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified
+      version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+  </div>
+
+  <div id="app">
+
+    <div ref="impress" id="impress" data-transition-duration="1000" data-width="1024" data-height="768" data-max-scale="3" data-min-scale="0" data-perspective="1000">
+
+      <div v-for="(item, key) of items" :key="key" :id="item.id" class="step slide" :data-x="item.x" :data-y="item.y" :data-z="item.z" :data-rotate="item.rotate" :data-rotate-x="item.rotatex" :data-rotate-y="item.rotatey" :data-rotate-z="item.rotatez">
+        <div @click.stop="goto(item.goto)" v-if="item.goto" class="block-link">
+          <img :src="item.image" class="slide-image" v-if="item.image" />
+          <h1 class="slide-title big" v-if="item.title">{{ item.title }}</h1>
+          <h1 class="slide-subtitle" v-if="item.subtitle">{{ item.subtitle }}</h1>
+        </div>
+        <div v-else>
+          <img :src="item.image" class="slide-image" v-if="item.image" />
+          <h1 class="slide-title big" v-if="item.title">{{ item.title }}</h1>
+          <h1 class="slide-subtitle" v-if="item.subtitle">{{ item.subtitle }}</h1>
+        </div>
+      </div>
+  
+      <div id="overview" class="step" data-x="0" data-y="0" data-z="0" data-scale="10"> </div>
+  
+    </div>
+  
+    <div id="impress-toolbar" v-if="impress">
+      <button @click="impress.goto('overview')">General</button>
+      <button @click="prev">Anterior</button>
+      {{ step }}
+      <button @click="next">Siguiente</button>
+    </div>
+  
+  </div>
+
+
+  <div class="hint">
+    <p>Use a spacebar or arrow keys to navigate. <br />
+      Press 'P' to launch speaker console.</p>
+  </div>
+  <script>
+    if ("ontouchstart" in document.documentElement) {
+      document.querySelector(".hint").innerHTML = "<p>Swipe left or right to navigate</p>";
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+  <script src="js/impress.js"></script>
+  
+  <script>
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        impress: null,
+        step: '',
+
+        items: [],
+
+        currentIndex: 0,
+      },
+      computed: {
+        
+      },
+      mounted() {
+        this.initSlides();
+        
+        // this.initImpress();
+      },
+
+      methods: {
+        initImpress() {
+          this.impress = impress();
+          this.impress.init();
+
+          const rootElement = this.$refs['impress'];
+          const that = this;
+
+          rootElement.addEventListener("impress:stepenter", function (event) {
+            const currentStep = event.target;
+            console.log("Entered the Step Element '" + currentStep.id + "'");
+            that.step = currentStep.id;
+          });
+
+          rootElement.addEventListener("impress:stepleave", function (event) {
+            var currentStep = event.target;
+            var nextStep = event.detail.next;
+            console.log("Left the Step Element '" + currentStep.id + "' and about to enter '" + nextStep.id);
+          });
+        },
+        prev() {
+          this.impress.prev();
+        },
+        next() {
+          this.impress.next();
+        },
+        goto(id) {
+          console.log(id);
+          this.impress.goto(id);
+        },
+
+        initSlides() {
+
+          const items = [
+            { id: '2021', title: '2021', x: 0, y: 0, z: 0, },
+            { id: '2020', title: '2020', x: 0, y: 500, z: -2000, },
+            { id: '2010', title: '2010', x: 0, y: 1000, z: -4000, },
+            { id: '2000', title: '2000', x: 0, y: 1500, z: -6000, },
+            { id: '1990', title: '1990', x: 0, y: 2000, z: -8000, },
+            { id: '1980', title: '1980', x: 0, y: 2500, z: -10000, },
+            { id: '1970', title: '1970', x: 0, y: 3000, z: -12000, },
+            { id: '1960', title: '1960', x: 0, y: 3500, z: -14000, },
+            { id: '1950', title: '1950', x: 0, y: 4000, z: -16000, },
+            { id: '1940', title: '1940', x: 0, y: 4500, z: -18000, },
+            { id: '1930', title: '1930', x: 0, y: 5000, z: -20000, },
+            { id: '1920', title: '1920', x: 0, y: 5500, z: -22000, },
+            { id: '1910', title: '1910', x: 0, y: 6000, z: -24000, },
+            { id: '1900', title: '1900', x: 0, y: 6500, z: -26000, },
+            { id: '1890', title: '1890', x: 0, y: 7000, z: -28000, },
+            { id: '1880', title: '1880', x: 0, y: 7500, z: -30000, },
+            { id: '1870', title: '1870', x: 0, y: 8000, z: -32000, },
+            { id: '1860', title: '1860', x: 0, y: 8500, z: -34000, },
+            { id: '1850', title: '1850', x: 0, y: 9000, z: -36000, },
+            { id: '1840', title: '1840', x: 0, y: 9500, z: -38000, },
+            { id: '1830', title: '1830', x: 0, y: 10000, z: -40000, },
+            { id: '1821', title: '1821', x: 0, y: 10500, z: -42000, goto: 'independencia'},
+            { id: 'independencia', subtitle: 'San Martín proclama la independencia', x: 1000, y: 10500, z: -42000, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/La_Independencia_del_Per%C3%BA.jpg/800px-La_Independencia_del_Per%C3%BA.jpg'},
+          ];
+
+          // for (let year of years) {
+          //   const i = 2021 - year;
+          //   const item = {
+          //     x: 0,
+          //     y: 500 * i,
+          //     z: -2000 * i,
+          //     title: year,
+          //   };
+          //   items.push(item);
+          // }
+
+          this.items = items;
+
+          setTimeout(() => {
+            this.initImpress();
+          }, 1000);
+        },
+      },
+    });
+
+    // app.initImpress();
+  
+  </script>
+
+</body>
+
+</html>
