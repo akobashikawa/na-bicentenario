@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=1024" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <title>General</title>
+  <title>Personaje 44</title>
 
   <meta name="author" content="Antonio Kobashikawa" />
 
@@ -31,7 +31,7 @@
 
     <div ref="impress" id="impress" data-transition-duration="1000" data-width="1024" data-height="768" data-max-scale="3" data-min-scale="0" data-perspective="1000">
 
-      <div v-for="(item, key) of items" :key="key" :id="item.id" class="step slide" :data-x="item.x" :data-y="item.y" :data-z="item.z" :data-rotate="item.rotate" :data-rotate-x="item.rotatex" :data-rotate-y="item.rotatey" :data-rotate-z="item.rotatez">
+      <div v-for="(item, key) of items" :key="key" :id="item.id" class="step slide" :data-x="item.x" :data-y="item.y" :data-z="item.z" :data-rotate-x="item.rotatex" :data-rotate-y="item.rotatey" :data-rotate-z="item.rotatez">
         <div @click.stop="goto(item.goto)" v-if="item.goto" class="block-link">
           <img :src="item.image" class="slide-image" v-if="item.image" />
           <h1 class="slide-title big" v-if="item.title">{{ item.title }}</h1>
@@ -127,9 +127,14 @@
         initSlides() {
 
           const items = [
-            { id: '0001', title: '0001', x: 0, y: 0, z: 0, goto: '0003' },
-            { id: '0002', title: '0002', x: 1000, y: 0, z: 0, goto: '0001' },
-            { id: '0003', title: '0003', x: 2000, y: 0, z: 0, goto: '0002' },
+            { id: '00', title: '44', x: 0, y: 0, z: 0, goto: '01'},
+            { id: '01', image: './img/marino-morikawa/marino_morikawa-1.png', x: 500, y: 0, z: -500, rotatey: 90, goto: '02' },
+            { id: '02', image: './img/marino-morikawa/marino_morikawa-2.png', x: 0, y: 0, z: -1000, rotatey: 180, goto: '03' },
+            { id: '03', image: './img/marino-morikawa/marino_morikawa-3.png', x: -500, y: 0, z: -500, rotatey: 270, goto: '04' },
+            { id: '04', image: './img/marino-morikawa/marino_morikawa-4.png', x: 0, y: 1000, z: 0, rotatey: 360, goto: '05' },
+
+            { id: '05', image: './img/marino-morikawa/marino_morikawa-5.png', x: 500, y: 1000, z: -500, rotatey: 450, goto: '06' },
+            { id: '06', subtitle: 'Marino Morikawa', image: './img/marino-morikawa/marino_morikawa-5.png', x: 0, y: 1000, z: -1000, rotatey: 540, goto: '01' },
           ];
 
           this.items = items;

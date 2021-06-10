@@ -127,10 +127,43 @@
         initSlides() {
 
           const items = [
-            { id: '0001', title: '0001', x: 0, y: 0, z: 0, goto: '0003' },
-            { id: '0002', title: '0002', x: 1000, y: 0, z: 0, goto: '0001' },
-            { id: '0003', title: '0003', x: 2000, y: 0, z: 0, goto: '0002' },
+            { id: '2021', title: '2021', x: 0, y: 0, z: 0, },
+            { id: '2020', title: '2020', x: 0, y: 500, z: -2000, },
+            { id: '2010', title: '2010', x: 0, y: 1000, z: -4000, },
+            { id: '2000', title: '2000', x: 0, y: 1500, z: -6000, },
+            { id: '1990', title: '1990', x: 0, y: 2000, z: -8000, },
+            { id: '1980', title: '1980', x: 0, y: 2500, z: -10000, },
+            { id: '1970', title: '1970', x: 0, y: 3000, z: -12000, },
+            { id: '1960', title: '1960', x: 0, y: 3500, z: -14000, },
+            { id: '1950', title: '1950', x: 0, y: 4000, z: -16000, },
+            { id: '1940', title: '1940', x: 0, y: 4500, z: -18000, },
+            { id: '1930', title: '1930', x: 0, y: 5000, z: -20000, },
+            { id: '1920', title: '1920', x: 0, y: 5500, z: -22000, },
+            { id: '1912', title: '1912', x: 0, y: 6000, z: -24000, goto: 'titanic' },
+            { id: '1900', title: '1900', x: 0, y: 6500, z: -26000, },
+            { id: '1890', title: '1890', x: 0, y: 7000, z: -28000, },
+            { id: '1880', title: '1880', x: 0, y: 7500, z: -30000, },
+            { id: '1870', title: '1870', x: 0, y: 8000, z: -32000, },
+            { id: '1860', title: '1860', x: 0, y: 8500, z: -34000, },
+            { id: '1850', title: '1850', x: 0, y: 9000, z: -36000, },
+            { id: '1840', title: '1840', x: 0, y: 9500, z: -38000, },
+            { id: '1830', title: '1830', x: 0, y: 10000, z: -40000, },
+            { id: '1821', title: '1821', x: 0, y: 10500, z: -42000, goto: 'independencia'},
+            { id: 'independencia', subtitle: 'San Martín proclama la independencia', x: 1000, y: 10500, z: -42000, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/La_Independencia_del_Per%C3%BA.jpg/800px-La_Independencia_del_Per%C3%BA.jpg'},
+            { id: 'titanic', subtitle: 'Casi viaja en el Titanic', x: 1000, y: 6500, z: -26000, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/RMS_Titanic_3.jpg/1280px-RMS_Titanic_3.jpg', goto: 'valdelomar'},
+            { id: 'valdelomar', subtitle: 'Estudió con Abreham Valdelomar', x: 1000, y: 6000, z: -24000, image: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Valdelomar1.jpg'},
           ];
+
+          // for (let year of years) {
+          //   const i = 2021 - year;
+          //   const item = {
+          //     x: 0,
+          //     y: 500 * i,
+          //     z: -2000 * i,
+          //     title: year,
+          //   };
+          //   items.push(item);
+          // }
 
           this.items = items;
 
