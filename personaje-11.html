@@ -1,0 +1,158 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1024" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Personaje 11</title>
+
+  <meta name="author" content="Antonio Kobashikawa" />
+
+  <link
+    href="//fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic"
+    rel="stylesheet" />
+
+  <link href="css/impress-demo.css" rel="stylesheet" />
+  <link href="css/impress-common.css" rel="stylesheet" />
+
+</head>
+
+<body class="impress-not-supported">
+
+  <div class="fallback-message">
+    <p>Cargando...</p>
+  </div>
+
+  <div id="app">
+
+    <div ref="impress" id="impress" data-transition-duration="1000" data-width="1024" data-height="768" data-max-scale="3" data-min-scale="0" data-perspective="1000">
+
+      <div v-for="(item, key) of items" :key="key" :id="item.id" class="step slide" :data-x="item.x" :data-y="item.y" :data-z="item.z" :data-rotate-x="item.rotatex" :data-rotate-y="item.rotatey" :data-rotate-z="item.rotatez">
+        <div @click.stop="goto(item.goto)" v-if="item.goto" class="block-link">
+          <img :src="item.image" class="slide-image" v-if="item.image" />
+          <h1 class="slide-title big" v-if="item.title">{{ item.title }}</h1>
+          <h1 class="slide-subtitle" v-if="item.subtitle">{{ item.subtitle }}</h1>
+          <p class="slide-text" v-if="item.text">{{ item.text }}</p>
+        </div>
+        <div v-else>
+          <img :src="item.image" class="slide-image" v-if="item.image" />
+          <h1 class="slide-title big" v-if="item.title">{{ item.title }}</h1>
+          <h1 class="slide-subtitle" v-if="item.subtitle">{{ item.subtitle }}</h1>
+          <p class="slide-text" v-if="item.text">{{ item.text }}</p>
+        </div>
+      </div>
+  
+      <div id="overview" class="step" data-x="0" data-y="0" data-z="0" data-scale="10"> </div>
+  
+    </div>
+  
+    <div id="impress-toolbar" v-if="impress">
+      <button @click="impress.goto('overview')">General</button>
+      <button @click="prev">Anterior</button>
+      {{ step }}
+      <button @click="next">Siguiente</button>
+    </div>
+  
+  </div>
+
+
+  <div class="hint">
+    <p>Use a spacebar or arrow keys to navigate. <br />
+      Press 'P' to launch speaker console.</p>
+  </div>
+  <script>
+    if ("ontouchstart" in document.documentElement) {
+      document.querySelector(".hint").innerHTML = "<p>Swipe left or right to navigate</p>";
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+  <script src="js/impress.js"></script>
+  
+  <script>
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        impress: null,
+        step: '',
+
+        items: [],
+
+        currentIndex: 0,
+      },
+      computed: {
+        
+      },
+      mounted() {
+        this.initSlides();
+        
+        // this.initImpress();
+      },
+
+      methods: {
+        initImpress() {
+          this.impress = impress();
+          this.impress.init();
+
+          const rootElement = this.$refs['impress'];
+          const that = this;
+
+          rootElement.addEventListener("impress:stepenter", function (event) {
+            const currentStep = event.target;
+            console.log("Entered the Step Element '" + currentStep.id + "'");
+            that.step = currentStep.id;
+          });
+
+          rootElement.addEventListener("impress:stepleave", function (event) {
+            var currentStep = event.target;
+            var nextStep = event.detail.next;
+            console.log("Left the Step Element '" + currentStep.id + "' and about to enter '" + nextStep.id);
+          });
+        },
+        prev() {
+          this.impress.prev();
+        },
+        next() {
+          this.impress.next();
+        },
+        goto(id) {
+          console.log(id);
+          this.impress.goto(id);
+        },
+
+        initSlides() {
+
+          const items = [
+            { id: '01', title: '11', x: 0, y: 0, z: 0, goto: '02'},
+            { id: '02', text: 'Texto', x: 500, y: 0, z: -500, rotatey: 90, goto: '03' },
+            { id: '03', text: 'Texto', x: 0, y: 0, z: -1000, rotatey: 180, goto: '04' },
+            { id: '04', text: 'Texto', x: -500, y: 0, z: -500, rotatey: 270, goto: '05' },
+
+            { id: '05', image: './img/santiago-antunez/santiago-antunez-5.jpg', x: 0, y: 1000, z: 0, rotatey: 360, goto: '06' },
+            { id: '06', image: './img/santiago-antunez/santiago-antunez-6.jpg', x: 500, y: 1000, z: -500, rotatey: 450, goto: '07' },
+            { id: '07', image: './img/santiago-antunez/santiago-antunez-7.jpg', x: 0, y: 1000, z: -1000, rotatey: 540, goto: '08' },
+            { id: '08', image: './img/santiago-antunez/santiago-antunez-8.jpg', x: -500, y: 1000, z: -500, rotatey: 630, goto: '09' },
+
+            { id: '09', subtitle: 'Santiago Antunez de Mayolo', image: './img/santiago-antunez/santiago-antunez-9.jpg', x: 0, y: 2000, z: 0, rotatey: 720, goto: '01' },
+          ];
+
+          this.items = items;
+
+          setTimeout(() => {
+            this.initImpress();
+          }, 1000);
+        },
+      },
+    });
+
+    // app.initImpress();
+  
+  </script>
+
+</body>
+
+</html>
